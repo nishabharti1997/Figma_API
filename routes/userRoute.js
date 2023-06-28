@@ -2,7 +2,9 @@ const express = require("express");
 const user_route = express();
 const bodyParser = require("body-parser");
 user_route.use(bodyParser.json());
-user_route.use(bodyParser.urlencoded({extended:true}));
+user_route.use(bodyParser.urlencoded({ extended: true }));
+const auth = require("../controllers/middleware/auth")
+require("../config/conn")
 // const passport = require('passport');
 // const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
@@ -24,7 +26,6 @@ user_route.use(bodyParser.urlencoded({extended:true}));
 // }));
 
 const user_controller = require("../controllers/userController");
-const auth = require("../middleware/auth")
 
 //Register route
 user_route.post('/register', user_controller.register_user);
@@ -33,12 +34,15 @@ user_route.post('/register', user_controller.register_user);
 user_route.post('/login', user_controller.user_login);
 
 //Auth route
-user_route.get('/test', auth, function(req,res){
-    return res.send({status:200, success:true, Message:"Authenticated"})
-});
+// user_route.get('/test', auth, (req, res) => {
+//     return res.send({ status: 200, success: true, Message: "Authenticated" })
+// });
 
+// user_route.get('/test', auth, (req, res) => {
+//     return res.send({ status: 200, success: true, Message: "Authenticated" })
+// })
 //update Password route
-user_route.post('/update-password', auth, user_controller.update_password);
+// user_route.post('/update-password', auth, user_controller.update_password);
 
 //Social Login
 // Configure routes
